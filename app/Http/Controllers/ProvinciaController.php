@@ -19,8 +19,8 @@ class ProvinciaController extends Controller
         $provinviasMaoeadas = $provincias -->map(function($provincia){
             return[
                 'id'=>
-            ]
-        })
+            ];
+        });
         //
     }
 
