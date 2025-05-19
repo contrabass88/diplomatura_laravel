@@ -8,26 +8,26 @@ use Illuminate\Http\Request;
 class ProvinciaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de todas las provincias.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $provincias = Provincia::all();
-        SELECT * FROM provincias::all();
-        $provinviasMaoeadas = $provincias -->map(function($provincia){
-            return[
-                'id'=>
-            ]
-        })
-        //
+
+        $provinciasMapeadas = $provincias->map(function ($provincia) {
+            return [
+                'id' => $provincia->id,
+                'nombre' => $provincia->nombre, // Asegurate que este campo existe en tu base
+            ];
+        });
+
+        return response()->json($provinciasMapeadas);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Muestra el formulario para crear una nueva provincia.
      */
     public function create()
     {
@@ -35,7 +35,7 @@ class ProvinciaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena una nueva provincia en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -46,7 +46,7 @@ class ProvinciaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra una provincia específica.
      *
      * @param  \App\Models\Provincia  $provincia
      * @return \Illuminate\Http\Response
@@ -57,7 +57,7 @@ class ProvinciaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar una provincia específica.
      *
      * @param  \App\Models\Provincia  $provincia
      * @return \Illuminate\Http\Response
@@ -68,7 +68,7 @@ class ProvinciaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza una provincia específica en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Provincia  $provincia
@@ -80,7 +80,7 @@ class ProvinciaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina una provincia específica de la base de datos.
      *
      * @param  \App\Models\Provincia  $provincia
      * @return \Illuminate\Http\Response

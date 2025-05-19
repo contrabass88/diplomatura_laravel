@@ -18,3 +18,4 @@ class Provincia extends Model
         'codigo'
     ];
 }
+ 
