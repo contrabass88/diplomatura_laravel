@@ -82,9 +82,16 @@ class TiketController extends Controller
      * @param  \App\Models\Tiket  $tiket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tiket $tiket)
+
+    public function update(Request $request, $id)
     {
-        //
+    $tiket = Tiket::findOrFail($id);
+    $tiket->update($request->all());
+
+    return response()->json([
+        'message' => 'Tiket actualizado correctamente',
+        'data' => $tiket
+    ]);
     }
 
     /**
@@ -94,7 +101,11 @@ class TiketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Tiket $tiket)
-    {
-        //
-    }
+{
+    $tiket->delete();
+
+    return response()->json([
+        'message' => 'Tiket eliminado correctamente'
+    ]);
+}
 }
