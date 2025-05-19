@@ -3,10 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\TiketController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Ruta para obtener provincias
+
 Route::get('/get-provincias', [ProvinciaController::class, 'index']);
+
+// Tickets
+Route::get('get-tikets', [TiketController::class, 'index']);
+Route::get('get-tikets/{id}', [TiketController::class, 'show']);
+Route::post('set-tikets', [TiketController::class, 'store']);
+Route::put('update-tikets/{id}', [TiketController::class, 'update']);
+Route::delete('delete-tikets/{id}', [TiketController::class, 'destroy']);
+

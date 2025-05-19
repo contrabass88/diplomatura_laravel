@@ -4,18 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
+use App\Models\Tiket;
+
 
 class Provincia extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'provincias'; /* el modelo provincia se va a relacionar con la tabla provincia que se crea en la BD*/
+    protected $table = 'provincias';
     protected $primaryKey = 'id';
-    public $incrementing = true; /* el id va a ser autoincremental*/
+    public $incrementing = true;
 
-    protected $fillable = [  /*atributo es un array donde se coloca todos los campos que tiene una tabla menos el id*/
+    protected $fillable = [
         'nombre',
         'codigo'
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'provincia_id', 'id');
+    }
+
+    public function tikets()    
+    {
+    return $this->hasMany(Tiket::class, 'provincia_id', 'id');
+    }      
+
 }
- 

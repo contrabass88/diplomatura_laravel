@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProvinciasTable extends Migration
+class CreateTiketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateProvinciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('provincias', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->integer('codigo');
-            $table->timestamps();
-            $table->softDeletes();
-        });
+    Schema::create('tikets', function (Blueprint $table) {
+        $table->id();
+        $table->string('nombre', 100);  
+        $table->text('descripcion');
+        $table->unsignedBigInteger('provincia_id');
+        $table->timestamps();
+    });
+
     }
 
     /**
@@ -29,6 +30,7 @@ class CreateProvinciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provincias');
+        Schema::dropIfExists('tikets');
+
     }
 }
