@@ -90,14 +90,14 @@ class ProvinciaController extends Controller
         //
     }
     /**
-    * Muestra todas las provincias con sus tickets asociados.
-    *
-    * @return \Illuminate\Http\JsonResponse
-    */
+     * Muestra todas las provincias con sus tickets asociados.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function provinciasConTikets()
     {
-    $provincias = Provincia::with('tikets')->get();
+        $provincias = Provincia::with('tikets')->get();
 
-    return response()->json($provincias);
+        return response()->json($provincias);
     }
 }

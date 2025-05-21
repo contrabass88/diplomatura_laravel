@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tiket;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TiketController extends Controller
 {
@@ -16,11 +17,11 @@ class TiketController extends Controller
     {
         //$tickets = Tiket::all();
         $tickets = Tiket::with('provincia')->get();
-        $tickets = $tickets ->map(function($ticket){
+        $tickets = $tickets->map(function ($ticket) {
             return [
-                'id'=> $ticket->id,
-                'nombre'=>$ticket->nombre,
-                'provincia'=>$ticket->provincia->nombre
+                'id' => $ticket->id,
+                'nombre' => $ticket->nombre,
+                'provincia' => $ticket->provincia->nombre
             ];
         });
         return response()->json($tickets);
@@ -45,9 +46,9 @@ class TiketController extends Controller
     public function store(Request $request)
     {
         $ticket = Tiket::create([
-            'nombre' =>$request->nombre,
-            'descripcion'=> $request->descripcion,
-            'provincia_id'=>$request->provincia_id
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'provincia_id' => $request->provincia_id
         ]);
 
         return response()->json($ticket);
@@ -59,10 +60,23 @@ class TiketController extends Controller
      * @param  \App\Models\Tiket  $tiket
      * @return \Illuminate\Http\Response
      */
-    public function show(Tiket $tiket)
+    public function show($id)
     {
-        //
+        $ticket = Tiket::with('provincia')->withTrashed()->find($id);
+
+        if (!$ticket) {
+            return response()->json(['message' => 'Tiket no encontrado'], 404);
+        }
+
+        return response()->json([
+            'id' => $ticket->id,
+            'nombre' => $ticket->nombre,
+            'descripcion' => $ticket->descripcion,
+            'provincia' => $ticket->provincia->nombre,
+            'eliminado' => $ticket->deleted_at !== null,
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -85,13 +99,13 @@ class TiketController extends Controller
 
     public function update(Request $request, $id)
     {
-    $tiket = Tiket::findOrFail($id);
-    $tiket->update($request->all());
+        $tiket = Tiket::findOrFail($id);
+        $tiket->update($request->all());
 
-    return response()->json([
-        'message' => 'Tiket actualizado correctamente',
-        'data' => $tiket
-    ]);
+        return response()->json([
+            'message' => 'Tiket actualizado correctamente',
+            'data' => $tiket
+        ]);
     }
 
     /**
@@ -101,11 +115,11 @@ class TiketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Tiket $tiket)
-{
-    $tiket->delete();
+    {
+        $tiket->delete();
 
-    return response()->json([
-        'message' => 'Tiket eliminado correctamente'
-    ]);
-}
+        return response()->json([
+            'message' => 'Tiket eliminado correctamente'
+        ]);
+    }
 }

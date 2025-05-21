@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tiket extends Model
 {
-    protected $table = 'tikets'; // <- nombre de tabla en la base
+    use SoftDeletes; // 👈 Y esta línea dentro de la clase
+
+    protected $table = 'tikets';
     protected $primaryKey = 'id';
     public $incrementing = true;
 
@@ -16,11 +19,9 @@ class Tiket extends Model
         'provincia_id',
     ];
 
-    // Relación con Provincia
     public function provincia()
     {
         return $this->belongsTo(Provincia::class, 'provincia_id', 'id');
     }
 }
-
 
