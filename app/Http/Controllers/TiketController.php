@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Provincia;
 
 class TiketController extends Controller
 {
@@ -120,6 +121,26 @@ class TiketController extends Controller
 
         return response()->json([
             'message' => 'Tiket eliminado correctamente'
+        ]);
+    }
+    public function getProvinciaTikets($id)
+    {
+        $provincia = Provincia::with('tikets')->find($id);
+
+        if (!$provincia) {
+            return response()->json(['message' => 'Provincia no encontrada'], 404);
+        }
+
+        $tikets = $provincia->tikets->map(function ($tiket) {
+            return [
+                'nombre' => $tiket->nombre,
+                'descripcion' => $tiket->descripcion,
+            ];
+        });
+
+        return response()->json([
+            'provincia' => $provincia->nombre,
+            'tikets' => $tikets
         ]);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tiket extends Model
 {
-    use SoftDeletes; // 👈 Y esta línea dentro de la clase
+    use SoftDeletes; 
 
     protected $table = 'tikets';
     protected $primaryKey = 'id';
