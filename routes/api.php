@@ -6,6 +6,8 @@ use App\Http\Controllers\ProvinciaController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\API\AuthController;
 
+
+// Login 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -17,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/get-provincias', [ProvinciaController::class, 'index']);
 });
 
+// Provincias
 Route::get('/get-provincia-tiket/{id}', [TiketController::class, 'getProvinciaTikets']);
 Route::get('provincias-tikets', [ProvinciaController::class, 'provinciasConTikets']);
 
